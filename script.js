@@ -96,3 +96,11 @@ function kembaliLanding() {
   // scroll ke atas
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".menu-toggle");
+  const nav = document.getElementById("navMenu");
+
+  btn?.addEventListener("click", () => {
+    nav.classList.toggle("active");
+  });
+});
