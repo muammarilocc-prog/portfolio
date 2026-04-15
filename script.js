@@ -1,86 +1,117 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* ================= MENU ================= */
+const Menu = {
+  nav: document.getElementById("navMenu"),
 
-  /* ================= MENU ================= */
-  const nav = document.getElementById("navMenu");
-  const menuBtn = document.querySelector(".menu-toggle");
+  toggle() {
+    this.nav?.classList.toggle("active");
+  },
 
-  if (nav && menuBtn) {
-    menuBtn.addEventListener("click", () => {
-      nav.classList.toggle("active");
-    });
+  close() {
+    this.nav?.classList.remove("active");
   }
+};
 
-  /* close menu saat klik link */
-  const navLinks = document.querySelectorAll("#navMenu a");
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("active");
-    });
-  });
+/* ================= LANDING PAGE ================= */
+const LandingPage = {
+  landing: document.getElementById("landingPage"),
+  main: document.getElementById("mainContent"),
+  button: document.getElementById("btnMasuk"),
 
-  /* ================= LANDING PAGE ================= */
-  const landing = document.getElementById("landingPage");
-  const main = document.getElementById("mainContent");
-  const btnMasuk = document.getElementById("btnMasuk");
+  init() {
+    if (!this.landing || !this.main) return;
 
-  if (landing && main) {
-    main.style.display = "none";
-    landing.style.display = "flex";
+    this.main.style.display = "none";
+    this.landing.style.display = "flex";
 
-    btnMasuk?.addEventListener("click", (e) => {
+    this.button?.addEventListener("click", (e) => {
       e.preventDefault();
-
-      landing.style.opacity = "0";
-
-      setTimeout(() => {
-        landing.style.display = "none";
-        main.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 300);
+      this.masuk();
     });
+  },
+
+  masuk() {
+    this.landing.style.opacity = "0";
+
+    setTimeout(() => {
+      this.landing.style.display = "none";
+      this.main.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 300);
   }
+};
 
-  /* ================= THEME ================= */
-  const root = document.documentElement;
-  const themeBtn = document.getElementById("themeToggle");
-  const icon = document.querySelector("#themeToggle .icon");
+/* ================= THEME ================= */
+const Theme = {
+  root: document.documentElement,
+  btn: document.getElementById("themeToggle"),
+  icon: document.querySelector("#themeToggle .icon"),
 
-  let theme = localStorage.getItem("theme") || "dark";
-  root.setAttribute("data-theme", theme);
+  init() {
+    if (!this.btn || !this.icon) return;
 
-  if (icon) {
-    icon.textContent = theme === "dark" ? "☀️" : "🌙";
-  }
+    this.current = localStorage.getItem("theme") || "dark";
+    this.apply(false);
 
-  themeBtn?.addEventListener("click", () => {
+    this.btn.addEventListener("click", () => this.toggle());
+  },
 
-    theme = theme === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+  apply(animate = true) {
+    this.root.setAttribute("data-theme", this.current);
+    localStorage.setItem("theme", this.current);
 
-    if (icon) {
-      icon.style.transform = "rotate(180deg)";
+    this.icon.textContent = this.current === "dark" ? "☀️" : "🌙";
 
+    if (animate) {
+      this.icon.style.transform = "rotate(180deg)";
       setTimeout(() => {
-        icon.style.transform = "rotate(0deg)";
+        this.icon.style.transform = "rotate(0deg)";
       }, 200);
-
-      icon.textContent = theme === "dark" ? "☀️" : "🌙";
     }
-  });
+  },
 
+  toggle() {
+    this.current = this.current === "dark" ? "light" : "dark";
+    this.apply(true);
+  }
+};
+
+/* ================= INIT ================= */
+document.addEventListener("DOMContentLoaded", () => {
+  LandingPage.init();
+  Theme.init();
 });
-
-/* ================= KELUAR LANDING ================= */
 function kembaliLanding() {
   const landing = document.getElementById("landingPage");
   const main = document.getElementById("mainContent");
 
   if (!landing || !main) return;
 
+  // sembunyikan main
   main.style.display = "none";
+
+  // tampilkan landing lagi
   landing.style.display = "flex";
   landing.style.opacity = "1";
 
+  // scroll ke atas
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+document.addEventListener("DOMContentLoaded", () => {
+
+  const nav = document.getElementById("navMenu");
+  const menuBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelectorAll("#navMenu a");
+
+  // buka/tutup menu
+  menuBtn?.addEventListener("click", () => {
+    nav.classList.toggle("active");
+  });
+
+  // klik link = tutup menu
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("active");
+    });
+  });
+
+});

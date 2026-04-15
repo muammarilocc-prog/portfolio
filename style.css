@@ -549,10 +549,38 @@ footer {
   height: 28px;
   object-fit: contain;
 }
-nav{
-  display:none;
+nav {
+  display: flex;
+  align-items: center;
 }
 
-nav.active{
-  display:flex;
+/* MOBILE ONLY */
+@media(max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  nav{
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: var(--card2);
+    flex-direction: column;
+
+    display: none;
+    padding: 20px 0;
+    z-index: 999;
+  }
+
+  nav.active{
+    display: flex;
+  }
+
+  nav a{
+    padding: 12px 0;
+    display: block;
+  }
+
 }
