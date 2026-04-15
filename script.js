@@ -4,11 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.getElementById("navMenu");
   const menuBtn = document.querySelector(".menu-toggle");
 
-  if (menuBtn && nav) {
+  if (nav && menuBtn) {
     menuBtn.addEventListener("click", () => {
       nav.classList.toggle("active");
     });
   }
+
+  /* close menu saat klik link */
+  const navLinks = document.querySelectorAll("#navMenu a");
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("active");
+    });
+  });
 
   /* ================= LANDING PAGE ================= */
   const landing = document.getElementById("landingPage");
@@ -52,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (icon) {
       icon.style.transform = "rotate(180deg)";
+
       setTimeout(() => {
         icon.style.transform = "rotate(0deg)";
       }, 200);

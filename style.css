@@ -549,3 +549,10 @@ footer {
   height: 28px;
   object-fit: contain;
 }
+nav{
+  display:none;
+}
+
+nav.active{
+  display:flex;
+}
